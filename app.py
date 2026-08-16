@@ -14,18 +14,15 @@ st.set_page_config(
 )
 
 # ==========================================
-# 2. DESIGN SYSTEM, FONTS & FONTAWESOME (UX/UI)
+# 2. DESIGN SYSTEM & CSS REFINADO (UX/UI)
 # ==========================================
 st.markdown("""
-    <!-- FONTAWESOME ICONS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- GOOGLE FONTS -->
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..800;1,300..800&family=Syne:wght@700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
+    /* TIPOGRAFIA GLOBAL LIMPA */
     html, body, [class*="css"] {
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Montserrat', sans-serif !important;
         color: #3E3232;
     }
 
@@ -33,59 +30,67 @@ st.markdown("""
         background-color: #E6DFD5;
     }
 
+    /* TÍTULOS E CABEÇALHOS ELEGANTES */
     h1, h2, h3, .brand-title {
-        font-family: 'Syne', 'Montserrat', sans-serif !important;
+        font-family: 'Montserrat', sans-serif !important;
         font-weight: 800 !important;
         color: #CF605B !important;
-        letter-spacing: -0.5px;
+        letter-spacing: -0.5px !important;
     }
 
-    /* ESTILIZAÇÃO DO MENU LATERAL (SIDEBAR) */
+    /* BARRA LATERAL CORAL MARCANTE */
     section[data-testid="stSidebar"] {
-        background-color: #FFF5E8 !important;
-        border-right: 2px solid #EAB890;
+        background-color: #CF605B !important;
+        border-right: none !important;
     }
 
-    /* TRANSFORMA O RADIO EM BOTÕES MODERNOS */
+    section[data-testid="stSidebar"] h1, 
+    section[data-testid="stSidebar"] h2, 
+    section[data-testid="stSidebar"] h3, 
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] div {
+        color: #FFF5E8 !important;
+    }
+
+    /* BOTÕES DO MENU LATERAL */
     div[data-testid="stRadio"] > div {
         gap: 10px;
     }
 
     div[data-testid="stRadio"] label {
-        background-color: #FFFFFF !important;
-        border: 1.5px solid #EAB890 !important;
-        border-radius: 12px !important;
+        background-color: rgba(255, 255, 255, 0.12) !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+        border-radius: 14px !important;
         padding: 12px 16px !important;
         width: 100% !important;
         cursor: pointer;
-        transition: all 0.25s ease !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        transition: all 0.2s ease !important;
     }
 
     div[data-testid="stRadio"] label:hover {
-        border-color: #CF605B !important;
-        background-color: #FFF5E8 !important;
-        transform: translateX(4px);
+        background-color: rgba(255, 255, 255, 0.22) !important;
+        border-color: #FFF5E8 !important;
+        transform: translateX(3px);
     }
 
-    /* Oculta a bolinha padrão do Radio */
+    /* OCULTA O ÍCONE CIRCULAR PADRÃO DO RADIO */
     div[data-testid="stRadio"] label > div:first-child {
         display: none !important;
     }
 
-    /* Estilo do item Selecionado */
+    /* ITEM SELECIONADO NO MENU */
     div[data-testid="stRadio"] label[data-checked="true"] {
-        background: linear-gradient(135deg, #CF605B 0%, #DB7F65 100%) !important;
-        border-color: #CF605B !important;
-        box-shadow: 0 4px 12px rgba(207, 96, 91, 0.3) !important;
+        background-color: #FFF5E8 !important;
+        border-color: #FFF5E8 !important;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15) !important;
     }
 
-    div[data-testid="stRadio"] label[data-checked="true"] * {
-        color: #FFFFFF !important;
-        font-weight: 700 !important;
+    div[data-testid="stRadio"] label[data-checked="true"] p {
+        color: #CF605B !important;
+        font-weight: 800 !important;
     }
 
-    /* CARD DE PRODUTO INTEGRADO */
+    /* CARDS DA TELA PRINCIPAL */
     .saya-card {
         background-color: #FFF5E8;
         border-radius: 20px;
@@ -101,7 +106,7 @@ st.markdown("""
         padding: 18px;
         border: 2px solid #EAB890;
         box-shadow: 0px 4px 12px rgba(0,0,0,0.03);
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .badge-tag {
@@ -137,15 +142,13 @@ st.markdown("""
         color: #FFFFFF !important;
         border-radius: 14px !important;
         border: none !important;
-        font-family: 'Montserrat', sans-serif !important;
         font-weight: 700 !important;
         width: 100%;
     }
 
     div[data-testid="stMetricValue"] {
-        font-family: 'Syne', sans-serif !important;
-        color: #CF605B !important;
         font-weight: 800 !important;
+        color: #CF605B !important;
     }
 
     hr {
@@ -181,8 +184,8 @@ with st.container():
         else:
             st.markdown("""
                 <div style="background-color: #FFF5E8; border: 2px solid #EAB890; border-radius: 18px; padding: 15px; text-align: center;">
-                    <i class="fa-solid fa-gem" style="font-size: 30px; color: #CF605B;"></i>
-                    <div style="font-family: 'Syne', sans-serif; font-weight: 800; color: #CF605B; font-size: 14px; margin-top: 5px;">SAYA BEADS</div>
+                    <span style="font-size: 28px;">✨</span>
+                    <div style="font-weight: 800; color: #CF605B; font-size: 13px; margin-top: 5px;">SAYA BEADS</div>
                 </div>
             """, unsafe_allow_html=True)
             
@@ -193,36 +196,36 @@ with st.container():
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. NAVEGAÇÃO LATERAL (COM ÍCONES VETORIAIS)
+# 5. NAVEGAÇÃO LATERAL (CORAL + DADOS CLAROS)
 # ==========================================
-st.sidebar.markdown("<h3 style='font-size: 18px; margin-bottom: 15px;'><i class='fa-solid fa-compass'></i> NAVEGAÇÃO</h3>", unsafe_allow_html=True)
+st.sidebar.markdown("<h3 style='font-size: 16px; margin-bottom: 15px; letter-spacing: 1px;'>📍 NAVEGAÇÃO</h3>", unsafe_allow_html=True)
 
 menu_options = [
-    '<i class="fa-solid fa-shapes"></i> &nbsp; Galeria de Produtos',
-    '<i class="fa-solid fa-circle-plus"></i> &nbsp; Cadastrar Produto',
-    '<i class="fa-solid fa-boxes-stacked"></i> &nbsp; Insumos Extras',
-    '<i class="fa-solid fa-calculator"></i> &nbsp; Calculadora & Ficha',
-    '<i class="fa-solid fa-file-csv"></i> &nbsp; Importar Shopee'
+    "🖼️  Galeria de Produtos",
+    "➕  Cadastrar Produto",
+    "📦  Insumos Extras",
+    "🧮  Calculadora & Ficha",
+    "📊  Importar Shopee"
 ]
 
 menu = st.sidebar.radio("", menu_options, label_visibility="collapsed")
 
-st.sidebar.markdown("<br><hr>", unsafe_allow_html=True)
-st.sidebar.markdown("<div style='text-align: center; color: #7A6664; font-size: 12px;'><b>Saya Beads ERP</b><br>Pixel Art & Gestão 🎨</div>", unsafe_allow_html=True)
+st.sidebar.markdown("<br><hr style='border-color: rgba(255,255,255,0.3) !important;'>", unsafe_allow_html=True)
+st.sidebar.markdown("<div style='text-align: center; color: #FFF5E8; font-size: 12px; opacity: 0.9;'><b>Saya Beads ERP</b><br>Pixel Art & Gestão 🎨</div>", unsafe_allow_html=True)
 
 # ------------------------------------------
 # TELA 1: GALERIA DE PRODUTOS
 # ------------------------------------------
 if "Galeria" in menu:
-    st.markdown("<h2><i class='fa-solid fa-shapes'></i> Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>🖼️ Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Visão geral do seu estoque atual catalogado.</p>", unsafe_allow_html=True)
     
     if not st.session_state.produtos:
         st.markdown("""
             <div class="saya-card" style="text-align: center; padding: 40px;">
-                <i class="fa-solid fa-box-open" style="font-size: 48px; color: #DB7F65;"></i>
+                <span style="font-size: 48px;">📦</span>
                 <h3 style="margin-top: 15px;">Nenhum produto cadastrado ainda</h3>
-                <p style="color: #7A6664;">Acesse <b>'Cadastrar Produto'</b> no menu lateral para adicinar suas peças!</p>
+                <p style="color: #7A6664;">Acesse <b>'Cadastrar Produto'</b> no menu lateral para adicionar suas peças!</p>
             </div>
         """, unsafe_allow_html=True)
     else:
@@ -242,7 +245,7 @@ if "Galeria" in menu:
                         <span class="badge-tag">{prod['tamanho']}</span>
                         <span class="badge-type">{prod['tipo']}</span>
                     </div>
-                    <h4 style="margin: 8px 0px 12px 0px; font-family: 'Syne', sans-serif; color: #CF605B; font-size: 20px;">{prod['nome']}</h4>
+                    <h4 style="margin: 8px 0px 12px 0px; color: #CF605B; font-size: 20px; font-weight: 800;">{prod['nome']}</h4>
                     <div style="background-color: #FFFFFF; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #EAB890;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-size: 13px; color: #7A6664;">Estoque:</span>
@@ -256,17 +259,17 @@ if "Galeria" in menu:
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # EXIBIÇÃO DA FOTO LOGO ABAIXO DO BLOCO
+                # FOTO LOGO ABAIXO DO BLOCO
                 if prod['foto'] is not None:
                     st.image(prod['foto'], use_container_width=True)
                 else:
                     st.markdown("""
                         <div style="background-color: #FFF5E8; border: 1.5px solid #EAB890; height: 180px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #7A6664; font-size: 13px; margin-bottom: 10px;">
-                            <i class="fa-regular fa-image" style="font-size: 24px; margin-right: 8px;"></i> Sem foto
+                            📷 Sem foto cadastrada
                         </div>
                     """, unsafe_allow_html=True)
                 
-                # BOTÕES DE AÇÃO: EDITAR E EXCLUIR
+                # BOTOES EDITAR / EXCLUIR
                 c_act1, c_act2 = st.columns(2)
                 
                 with c_act1:
@@ -305,7 +308,7 @@ if "Galeria" in menu:
 # TELA 2: CADASTRO DE PRODUTO
 # ------------------------------------------
 elif "Cadastrar" in menu:
-    st.markdown("<h2><i class='fa-solid fa-circle-plus'></i> Cadastrar Novo Produto</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>➕ Cadastrar Novo Produto</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Adicione novos itens ao catálogo de artes da Saya Beads.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -338,7 +341,7 @@ elif "Cadastrar" in menu:
             else:
                 st.markdown("""
                     <div style="border: 2px dashed #EAB890; border-radius: 14px; padding: 30px; text-align: center; background-color: #FFFFFF; color: #7A6664;">
-                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 32px; color: #DB7F65;"></i><br>
+                        <span style="font-size: 32px;">📷</span><br>
                         <span style="font-size: 13px;">Envie uma foto clara da sua arte pronta</span>
                     </div>
                 """, unsafe_allow_html=True)
@@ -368,7 +371,7 @@ elif "Cadastrar" in menu:
 # TELA 3: INSUMOS EXTRAS
 # ------------------------------------------
 elif "Insumos" in menu:
-    st.markdown("<h2><i class='fa-solid fa-boxes-stacked'></i> Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>📦 Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Controle de ferragens, embalagens e mimos enviados aos clientes.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -406,7 +409,7 @@ elif "Insumos" in menu:
 # TELA 4: CALCULADORA DE PREÇO & MARGEM
 # ------------------------------------------
 elif "Calculadora" in menu:
-    st.markdown("<h2><i class='fa-solid fa-calculator'></i> Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>🧮 Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Simule o preço de venda ideal considerando custos de fabricação e comissões.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -450,12 +453,12 @@ elif "Calculadora" in menu:
 # TELA 5: IMPORTADOR SHOPEE
 # ------------------------------------------
 elif "Importar" in menu:
-    st.markdown("<h2><i class='fa-solid fa-file-csv'></i> Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>📊 Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Carregue a planilha de relatórios da Shopee para dar baixa automática no estoque.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card" style="text-align: center; padding: 40px;">', unsafe_allow_html=True)
-    st.markdown("<i class='fa-solid fa-file-excel' style='font-size: 48px; color: #DB7F65;'></i>", unsafe_allow_html=True)
-    st.markdown("<h4 style='margin-top: 15px;'>Selecione o arquivo exportado da Shopee</h4>", unsafe_allow_html=True)
+    st.markdown("<span style='font-size: 48px;'>📑</span>", unsafe_allow_html=True)
+    st.markdown("<h4>Selecione o arquivo exportado da Shopee</h4>", unsafe_allow_html=True)
     
     file_shopee = st.file_uploader("", type=["csv", "xlsx"])
     if file_shopee is not None:
