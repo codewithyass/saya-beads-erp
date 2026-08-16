@@ -8,20 +8,34 @@ import os
 # ==========================================
 st.set_page_config(
     page_title="Saya Beads ERP",
-    page_icon="🎨",
+    page_icon=":material/palette:",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
+# Initialize navigation state
+if 'pagina_atual' not in st.session_state:
+    st.session_state.pagina_atual = "Galeria de Produtos"
+
+if 'produtos' not in st.session_state:
+    st.session_state.produtos = []
+
+if 'insumos' not in st.session_state:
+    st.session_state.insumos = [
+        {"Item": "Argola de Chaveiro (Prata)", "Categoria": "Ferragem", "Estoque (Unid.)": 200, "Custo Unid. (R$)": 0.25},
+        {"Item": "Manta Magnética / Ímã", "Categoria": "Ímã", "Estoque (Unid.)": 150, "Custo Unid. (R$)": 0.50},
+        {"Item": "Saquinho PP Transparente", "Categoria": "Embalagem", "Estoque (Unid.)": 300, "Custo Unid. (R$)": 0.15},
+        {"Item": "Adesivo Mimo Saya Beads", "Categoria": "Mimos", "Estoque (Unid.)": 100, "Custo Unid. (R$)": 0.30},
+    ]
+
 # ==========================================
-# 2. DESIGN SYSTEM & CSS (CLAUDE MENU STYLE)
+# 2. DESIGN SYSTEM & ESTILIZAÇÃO (ESTILO CLAUDE)
 # ==========================================
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
 
-    /* TIPOGRAFIA GLOBAL */
+    /* TIPOGRAFIA GLOBAL MONTSERRAT */
     html, body, div, span, p, h1, h2, h3, h4, label, input, button {
         font-family: 'Montserrat', sans-serif !important;
     }
@@ -37,77 +51,56 @@ st.markdown("""
         border-right: none !important;
     }
 
-    /* ------------------------------------------
-       OCULTAR CÍRCULO / CHECKBOX DO RADIO
-    ------------------------------------------ */
-    div[data-testid="stRadio"] label > div:first-child,
-    div[data-testid="stRadio"] label input {
-        display: none !important;
-    }
-
-    /* ESTILIZAÇÃO DAS OPÇÕES DO MENU (ESTILO CLAUDE) */
-    div[data-testid="stRadio"] > div {
-        gap: 6px !important;
-    }
-
-    div[data-testid="stRadio"] label {
-        background-color: transparent !important;
-        border: none !important;
+    /* ----------------------------------------------------
+       BOTÕES DO MENU LATERAL (SIMULAÇÃO DO DESIGN DO CLAUDE)
+    ---------------------------------------------------- */
+    section[data-testid="stSidebar"] .stButton > button {
         border-radius: 12px !important;
-        padding: 12px 18px !important;
-        width: 100% !important;
-        cursor: pointer !important;
-        transition: all 0.2s ease-in-out !important;
-        display: flex !important;
-        align-items: center !important;
-        margin: 0 !important;
-    }
-
-    /* HOVER NOS ITENS NÃO SELECIONADOS */
-    div[data-testid="stRadio"] label:hover {
-        background-color: rgba(255, 255, 255, 0.12) !important;
-    }
-
-    /* TEXTO DOS ITENS NÃO SELECIONADOS */
-    div[data-testid="stRadio"] label p,
-    div[data-testid="stRadio"] label span {
-        color: #FFF5E8 !important;
-        font-weight: 600 !important;
+        padding: 12px 16px !important;
         font-size: 15px !important;
+        font-weight: 600 !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        border: none !important;
+        box-shadow: none !important;
+        height: auto !important;
+        margin-bottom: 6px !important;
+        width: 100% !important;
+        transition: all 0.2s ease-in-out !important;
     }
 
-    /* ITEM SELECIONADO (DESTAQUE CREME) */
-    div[data-testid="stRadio"] label[data-checked="true"] {
+    /* ITEM NÃO SELECIONADO: FUNDO TRANSPARENTE E TEXTO BRANCO/CREME */
+    section[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
+        background-color: transparent !important;
+        color: #FFF5E8 !important;
+    }
+
+    section[data-testid="stSidebar"] .stButton > button[kind="secondary"]:hover {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+        color: #FFFFFF !important;
+    }
+
+    /* ITEM SELECIONADO: CARD CREME COM TEXTO CORAL */
+    section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
         background-color: #FFF5E8 !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    div[data-testid="stRadio"] label[data-checked="true"] p,
-    div[data-testid="stRadio"] label[data-checked="true"] span {
         color: #CF605B !important;
         font-weight: 800 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
     }
 
-    /* ÍCONES VETORIAIS NO MENU LATERAL */
-    div[data-testid="stRadio"] label::before {
-        font-family: 'Material Symbols Outlined' !important;
-        font-size: 22px !important;
-        margin-right: 12px !important;
-        display: inline-block !important;
-        vertical-align: middle !important;
-        color: #FFF5E8 !important;
-    }
-
-    div[data-testid="stRadio"] label[data-checked="true"]::before {
+    section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+        background-color: #FFFFFF !important;
         color: #CF605B !important;
     }
 
-    /* MAPEAMENTO DOS ÍCONES VETORIAIS DO MENU */
-    div[data-testid="stRadio"] > div > label:nth-child(1)::before { content: 'grid_view'; }
-    div[data-testid="stRadio"] > div > label:nth-child(2)::before { content: 'add_circle'; }
-    div[data-testid="stRadio"] > div > label:nth-child(3)::before { content: 'inventory_2'; }
-    div[data-testid="stRadio"] > div > label:nth-child(4)::before { content: 'calculate'; }
-    div[data-testid="stRadio"] > div > label:nth-child(5)::before { content: 'cloud_upload'; }
+    /* GARANTE COR DOS ÍCONES NOS BOTÕES */
+    section[data-testid="stSidebar"] .stButton > button[kind="primary"] * {
+        color: #CF605B !important;
+    }
+
+    section[data-testid="stSidebar"] .stButton > button[kind="secondary"] * {
+        color: #FFF5E8 !important;
+    }
 
     /* CARDS DA TELA PRINCIPAL */
     .saya-card {
@@ -156,7 +149,9 @@ st.markdown("""
         color: #3E3232 !important;
     }
 
-    .stButton>button {
+    /* BOTÃO PRINCIPAL DE FORMULÁRIO */
+    div.element-container button[kind="secondaryFormSubmit"],
+    .stButton > button:not(section[data-testid="stSidebar"] *) {
         background: linear-gradient(135deg, #CF605B 0%, #DB7F65 100%) !important;
         color: #FFFFFF !important;
         border-radius: 14px !important;
@@ -177,31 +172,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Helper para renderizar títulos de página com ícone vetorial
-def page_title(icon, text):
-    st.markdown(f"""
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-            <span class="material-symbols-outlined" style="font-size: 32px; color: #CF605B; font-weight: bold;">{icon}</span>
-            <h2 style="margin: 0 !important; color: #CF605B !important; font-size: 26px; font-weight: 800;">{text}</h2>
-        </div>
-    """, unsafe_allow_html=True)
-
 # ==========================================
-# 3. BANCO DE DADOS EM MEMÓRIA
-# ==========================================
-if 'produtos' not in st.session_state:
-    st.session_state.produtos = []
-
-if 'insumos' not in st.session_state:
-    st.session_state.insumos = [
-        {"Item": "Argola de Chaveiro (Prata)", "Categoria": "Ferragem", "Estoque (Unid.)": 200, "Custo Unid. (R$)": 0.25},
-        {"Item": "Manta Magnética / Ímã", "Categoria": "Ímã", "Estoque (Unid.)": 150, "Custo Unid. (R$)": 0.50},
-        {"Item": "Saquinho PP Transparente", "Categoria": "Embalagem", "Estoque (Unid.)": 300, "Custo Unid. (R$)": 0.15},
-        {"Item": "Adesivo Mimo Saya Beads", "Categoria": "Mimos", "Estoque (Unid.)": 100, "Custo Unid. (R$)": 0.30},
-    ]
-
-# ==========================================
-# 4. CABEÇALHO DA TELA
+# 3. CABEÇALHO DA TELA
 # ==========================================
 with st.container():
     col_logo, col_header = st.columns([1, 4])
@@ -223,23 +195,34 @@ with st.container():
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. NAVEGAÇÃO LATERAL
+# 4. NAVEGAÇÃO LATERAL (SEM BOTÕES DE CHECKBOX)
 # ==========================================
 st.sidebar.markdown("""
-    <div style='font-size: 13px; font-weight: 800; letter-spacing: 1px; color: #FFF5E8; margin-bottom: 14px; opacity: 0.9;'>
+    <div style='font-size: 12px; font-weight: 800; letter-spacing: 1.2px; color: #FFF5E8; margin-bottom: 16px; opacity: 0.9;'>
         NAVEGAÇÃO
     </div>
 """, unsafe_allow_html=True)
 
-menu_options = [
-    "Galeria de Produtos",
-    "Cadastrar Produto",
-    "Insumos Extras",
-    "Calculadora & Ficha",
-    "Importar Shopee"
+menu_items = [
+    {"id": "Galeria de Produtos", "label": "Galeria de Produtos", "icon": ":material/grid_view:"},
+    {"id": "Cadastrar Produto", "label": "Cadastrar Produto", "icon": ":material/add_circle:"},
+    {"id": "Insumos Extras", "label": "Insumos Extras", "icon": ":material/inventory_2:"},
+    {"id": "Calculadora & Ficha", "label": "Calculadora & Ficha", "icon": ":material/calculate:"},
+    {"id": "Importar Shopee", "label": "Importar Shopee", "icon": ":material/cloud_upload:"},
 ]
 
-menu = st.sidebar.radio("", menu_options, label_visibility="collapsed")
+for item in menu_items:
+    is_selected = (st.session_state.pagina_atual == item["id"])
+    btn_type = "primary" if is_selected else "secondary"
+    
+    if st.sidebar.button(
+        f"{item['icon']}  {item['label']}", 
+        key=f"nav_{item['id']}", 
+        type=btn_type, 
+        use_container_width=True
+    ):
+        st.session_state.pagina_atual = item["id"]
+        st.rerun()
 
 st.sidebar.markdown("<br><hr style='border-color: rgba(255,255,255,0.2) !important;'>", unsafe_allow_html=True)
 st.sidebar.markdown("""
@@ -248,11 +231,16 @@ st.sidebar.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+# ==========================================
+# 5. CONTEÚDO DAS TELAS
+# ==========================================
+menu = st.session_state.pagina_atual
+
 # ------------------------------------------
 # TELA 1: GALERIA DE PRODUTOS
 # ------------------------------------------
 if menu == "Galeria de Produtos":
-    page_title("grid_view", "Galeria de Produtos Prontos")
+    st.markdown("## :material/grid_view: Galeria de Produtos Prontos")
     st.markdown("Visão geral do seu estoque atual catalogado.")
     
     if not st.session_state.produtos:
@@ -338,7 +326,7 @@ if menu == "Galeria de Produtos":
 # TELA 2: CADASTRO DE PRODUTO
 # ------------------------------------------
 elif menu == "Cadastrar Produto":
-    page_title("add_circle", "Cadastrar Novo Produto")
+    st.markdown("## :material/add_circle: Cadastrar Novo Produto")
     st.markdown("Adicione novos itens ao catálogo de artes da Saya Beads.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -400,7 +388,7 @@ elif menu == "Cadastrar Produto":
 # TELA 3: INSUMOS EXTRAS
 # ------------------------------------------
 elif menu == "Insumos Extras":
-    page_title("inventory_2", "Estoque de Insumos Extras")
+    st.markdown("## :material/inventory_2: Estoque de Insumos Extras")
     st.markdown("Controle de ferragens, embalagens e mimos enviados aos clientes.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -421,7 +409,7 @@ elif menu == "Insumos Extras":
 # TELA 4: CALCULADORA
 # ------------------------------------------
 elif menu == "Calculadora & Ficha":
-    page_title("calculate", "Calculadora de Preço & Lucro Shopee")
+    st.markdown("## :material/calculate: Calculadora de Preço & Lucro Shopee")
     st.markdown("Simule o preço de venda ideal considerando custos de fabricação e comissões.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -463,7 +451,7 @@ elif menu == "Calculadora & Ficha":
 # TELA 5: IMPORTADOR
 # ------------------------------------------
 elif menu == "Importar Shopee":
-    page_title("cloud_upload", "Importação de Vendas Shopee")
+    st.markdown("## :material/cloud_upload: Importação de Vendas Shopee")
     st.markdown("Carregue a planilha de relatórios da Shopee para dar baixa automática no estoque.")
     
     st.markdown('<div class="saya-card" style="text-align: center; padding: 40px;">', unsafe_allow_html=True)
