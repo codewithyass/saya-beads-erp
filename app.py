@@ -8,20 +8,21 @@ import os
 # ==========================================
 st.set_page_config(
     page_title="Saya Beads ERP",
-    page_icon="🎨",
+    page_icon="✨",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # ==========================================
-# 2. DESIGN SYSTEM & CSS REFINADO (UX/UI)
+# 2. DESIGN SYSTEM, FONTE MONTSERRAT & FONTAWESOME
 # ==========================================
 st.markdown("""
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
-    /* TIPOGRAFIA GLOBAL LIMPA */
-    html, body, [class*="css"] {
+    /* TIPOGRAFIA GLOBAL MONTSERRAT */
+    html, body, [class*="css"], .stMarkdown {
         font-family: 'Montserrat', sans-serif !important;
         color: #3E3232;
     }
@@ -30,7 +31,7 @@ st.markdown("""
         background-color: #E6DFD5;
     }
 
-    /* TÍTULOS E CABEÇALHOS ELEGANTES */
+    /* TÍTULOS E CABEÇALHOS */
     h1, h2, h3, .brand-title {
         font-family: 'Montserrat', sans-serif !important;
         font-weight: 800 !important;
@@ -48,11 +49,12 @@ st.markdown("""
     section[data-testid="stSidebar"] h2, 
     section[data-testid="stSidebar"] h3, 
     section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] div {
+    section[data-testid="stSidebar"] div,
+    section[data-testid="stSidebar"] span {
         color: #FFF5E8 !important;
     }
 
-    /* BOTÕES DO MENU LATERAL */
+    /* BOTÕES DE NAVEGAÇÃO NO MENU LATERAL */
     div[data-testid="stRadio"] > div {
         gap: 10px;
     }
@@ -73,7 +75,7 @@ st.markdown("""
         transform: translateX(3px);
     }
 
-    /* OCULTA O ÍCONE CIRCULAR PADRÃO DO RADIO */
+    /* OCULTA O CÍRCULO PADRÃO DO RADIO BUTTON */
     div[data-testid="stRadio"] label > div:first-child {
         display: none !important;
     }
@@ -85,7 +87,8 @@ st.markdown("""
         box-shadow: 0 4px 14px rgba(0,0,0,0.15) !important;
     }
 
-    div[data-testid="stRadio"] label[data-checked="true"] p {
+    div[data-testid="stRadio"] label[data-checked="true"] p,
+    div[data-testid="stRadio"] label[data-checked="true"] span {
         color: #CF605B !important;
         font-weight: 800 !important;
     }
@@ -155,6 +158,16 @@ st.markdown("""
         border-color: #EAB890 !important;
         opacity: 0.5;
     }
+
+    /* ÍCONES FONTAWESOME ESTILIZADOS */
+    .icon-title {
+        color: #CF605B;
+        margin-right: 8px;
+    }
+    .icon-sub {
+        color: #E49872;
+        margin-right: 6px;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -184,7 +197,7 @@ with st.container():
         else:
             st.markdown("""
                 <div style="background-color: #FFF5E8; border: 2px solid #EAB890; border-radius: 18px; padding: 15px; text-align: center;">
-                    <span style="font-size: 28px;">✨</span>
+                    <i class="fa-solid fa-gem" style="font-size: 28px; color: #CF605B;"></i>
                     <div style="font-weight: 800; color: #CF605B; font-size: 13px; margin-top: 5px;">SAYA BEADS</div>
                 </div>
             """, unsafe_allow_html=True)
@@ -196,34 +209,44 @@ with st.container():
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. NAVEGAÇÃO LATERAL (CORAL + DADOS CLAROS)
+# 5. NAVEGAÇÃO LATERAL (VETORIAL / MATERIAL SYMBOLS)
 # ==========================================
-st.sidebar.markdown("<h3 style='font-size: 16px; margin-bottom: 15px; letter-spacing: 1px;'>📍 NAVEGAÇÃO</h3>", unsafe_allow_html=True)
+st.sidebar.markdown("""
+    <div style='display: flex; align-items: center; gap: 8px; margin-bottom: 15px;'>
+        <i class="fa-solid fa-compass" style="font-size: 18px; color: #FFF5E8;"></i>
+        <span style='font-size: 15px; font-weight: 800; letter-spacing: 1px; color: #FFF5E8;'>NAVEGAÇÃO</span>
+    </div>
+""", unsafe_allow_html=True)
 
 menu_options = [
-    "🖼️  Galeria de Produtos",
-    "➕  Cadastrar Produto",
-    "📦  Insumos Extras",
-    "🧮  Calculadora & Ficha",
-    "📊  Importar Shopee"
+    ":material/grid_view:  Galeria de Produtos",
+    ":material/add_circle:  Cadastrar Produto",
+    ":material/inventory_2:  Insumos Extras",
+    ":material/calculate:  Calculadora & Ficha",
+    ":material/cloud_upload:  Importar Shopee"
 ]
 
 menu = st.sidebar.radio("", menu_options, label_visibility="collapsed")
 
 st.sidebar.markdown("<br><hr style='border-color: rgba(255,255,255,0.3) !important;'>", unsafe_allow_html=True)
-st.sidebar.markdown("<div style='text-align: center; color: #FFF5E8; font-size: 12px; opacity: 0.9;'><b>Saya Beads ERP</b><br>Pixel Art & Gestão 🎨</div>", unsafe_allow_html=True)
+st.sidebar.markdown("""
+    <div style='text-align: center; color: #FFF5E8; font-size: 12px; opacity: 0.9;'>
+        <b>Saya Beads ERP</b><br>
+        <i class="fa-solid fa-palette" style="margin-top: 5px;"></i> Pixel Art & Gestão
+    </div>
+""", unsafe_allow_html=True)
 
 # ------------------------------------------
 # TELA 1: GALERIA DE PRODUTOS
 # ------------------------------------------
 if "Galeria" in menu:
-    st.markdown("<h2>🖼️ Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
+    st.markdown("<h2><i class='fa-solid fa-shapes icon-title'></i>Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Visão geral do seu estoque atual catalogado.</p>", unsafe_allow_html=True)
     
     if not st.session_state.produtos:
         st.markdown("""
             <div class="saya-card" style="text-align: center; padding: 40px;">
-                <span style="font-size: 48px;">📦</span>
+                <i class="fa-solid fa-box-open" style="font-size: 48px; color: #CF605B;"></i>
                 <h3 style="margin-top: 15px;">Nenhum produto cadastrado ainda</h3>
                 <p style="color: #7A6664;">Acesse <b>'Cadastrar Produto'</b> no menu lateral para adicionar suas peças!</p>
             </div>
@@ -231,14 +254,13 @@ if "Galeria" in menu:
     else:
         col_f1, _ = st.columns([2, 1])
         with col_f1:
-            busca = st.text_input("🔍 Buscar produto pelo nome...", placeholder="Ex: Coração, Pacman, Gato")
+            busca = st.text_input("Buscar produto pelo nome...", placeholder="Ex: Coração, Pacman, Gato")
         
         prods_filtrados = [(idx, p) for idx, p in enumerate(st.session_state.produtos) if busca.lower() in p['nome'].lower()]
         
         cols = st.columns(3)
         for i, (real_idx, prod) in enumerate(prods_filtrados):
             with cols[i % 3]:
-                # CARD INTEGRADO: TAGS + TÍTULO + ESTOQUE & PREÇO TUDO NO BLOCO SUPERIOR
                 st.markdown(f"""
                 <div class="product-card-container">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -259,21 +281,20 @@ if "Galeria" in menu:
                 </div>
                 """, unsafe_allow_html=True)
                 
-                # FOTO LOGO ABAIXO DO BLOCO
                 if prod['foto'] is not None:
                     st.image(prod['foto'], use_container_width=True)
                 else:
                     st.markdown("""
-                        <div style="background-color: #FFF5E8; border: 1.5px solid #EAB890; height: 180px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #7A6664; font-size: 13px; margin-bottom: 10px;">
-                            📷 Sem foto cadastrada
+                        <div style="background-color: #FFF5E8; border: 1.5px solid #EAB890; height: 180px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #7A6664; font-size: 13px; margin-bottom: 10px;">
+                            <i class="fa-solid fa-image" style="font-size: 24px; margin-bottom: 6px; color: #E49872;"></i>
+                            Sem foto cadastrada
                         </div>
                     """, unsafe_allow_html=True)
                 
-                # BOTOES EDITAR / EXCLUIR
                 c_act1, c_act2 = st.columns(2)
                 
                 with c_act1:
-                    with st.popover("✏️ Editar"):
+                    with st.popover("Editar"):
                         st.markdown(f"**Editar: {prod['nome']}**")
                         novo_nome = st.text_input("Nome", value=prod['nome'], key=f"edit_nome_{real_idx}")
                         novo_tipo = st.selectbox("Tipo", ["Chaveiro", "Ímã", "Peça Individual (Sem montagem)"], 
@@ -298,7 +319,7 @@ if "Galeria" in menu:
                             st.rerun()
 
                 with c_act2:
-                    if st.button("🗑️ Excluir", key=f"del_btn_{real_idx}"):
+                    if st.button("Excluir", key=f"del_btn_{real_idx}"):
                         st.session_state.produtos.pop(real_idx)
                         st.rerun()
 
@@ -308,7 +329,7 @@ if "Galeria" in menu:
 # TELA 2: CADASTRO DE PRODUTO
 # ------------------------------------------
 elif "Cadastrar" in menu:
-    st.markdown("<h2>➕ Cadastrar Novo Produto</h2>", unsafe_allow_html=True)
+    st.markdown("<h2><i class='fa-solid fa-circle-plus icon-title'></i>Cadastrar Novo Produto</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Adicione novos itens ao catálogo de artes da Saya Beads.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -317,21 +338,21 @@ elif "Cadastrar" in menu:
         col_form_left, col_form_right = st.columns([1.4, 1])
         
         with col_form_left:
-            st.markdown("<h4 style='color: #DB7F65; font-size: 16px;'>1. Informações Básicas</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color: #DB7F65; font-size: 16px;'><i class='fa-solid fa-pen-to-square icon-sub'></i>1. Informações Básicas</h4>", unsafe_allow_html=True)
             nome = st.text_input("Nome da Arte / Produto *", placeholder="Ex: Chaveiro Coração Pixel 8-bit")
             
             c_t1, c_t2 = st.columns(2)
             tipo = c_t1.selectbox("Tipo de Produto", ["Chaveiro", "Ímã", "Peça Individual (Sem montagem)"])
             tamanho = c_t2.selectbox("Tamanho da Peça", ["Mini", "Pequeno", "Médio", "Grande"])
             
-            st.markdown("<h4 style='color: #DB7F65; font-size: 16px; margin-top: 15px;'>2. Estoque e Valores</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color: #DB7F65; font-size: 16px; margin-top: 15px;'><i class='fa-solid fa-coins icon-sub'></i>2. Estoque e Valores</h4>", unsafe_allow_html=True)
             c_v1, c_v2, c_v3 = st.columns(3)
             estoque = c_v1.number_input("Estoque Inicial", min_value=0, value=1)
             custo = c_v2.number_input("Custo Material (R$)", min_value=0.0, value=3.50, step=0.50)
             preco = c_v3.number_input("Preço Shopee (R$)", min_value=0.0, value=15.00, step=1.00)
             
         with col_form_right:
-            st.markdown("<h4 style='color: #DB7F65; font-size: 16px;'>3. Foto do Produto</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color: #DB7F65; font-size: 16px;'><i class='fa-solid fa-camera icon-sub'></i>3. Foto do Produto</h4>", unsafe_allow_html=True)
             foto_file = st.file_uploader("Selecione uma imagem (JPG ou PNG)", type=["jpg", "jpeg", "png"])
             foto_img = None
             
@@ -341,17 +362,17 @@ elif "Cadastrar" in menu:
             else:
                 st.markdown("""
                     <div style="border: 2px dashed #EAB890; border-radius: 14px; padding: 30px; text-align: center; background-color: #FFFFFF; color: #7A6664;">
-                        <span style="font-size: 32px;">📷</span><br>
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 32px; color: #CF605B; margin-bottom: 8px;"></i><br>
                         <span style="font-size: 13px;">Envie uma foto clara da sua arte pronta</span>
                     </div>
                 """, unsafe_allow_html=True)
                 
         st.markdown("<br>", unsafe_allow_html=True)
-        submitted = st.form_submit_button("✨ Salvar Produto no ERP Saya Beads")
+        submitted = st.form_submit_button("Salvar Produto no ERP Saya Beads")
         
         if submitted:
             if nome.strip() == "":
-                st.error("⚠️ Por favor, digite o nome do produto antes de salvar!")
+                st.error("Por favor, digite o nome do produto antes de salvar!")
             else:
                 novo_prod = {
                     "nome": nome,
@@ -363,7 +384,7 @@ elif "Cadastrar" in menu:
                     "foto": foto_img
                 }
                 st.session_state.produtos.append(novo_prod)
-                st.success(f"🎉 Produto **'{nome}'** cadastrado com sucesso!")
+                st.success(f"Produto **'{nome}'** cadastrado com sucesso!")
                 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -371,7 +392,7 @@ elif "Cadastrar" in menu:
 # TELA 3: INSUMOS EXTRAS
 # ------------------------------------------
 elif "Insumos" in menu:
-    st.markdown("<h2>📦 Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
+    st.markdown("<h2><i class='fa-solid fa-boxes-stacked icon-title'></i>Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Controle de ferragens, embalagens e mimos enviados aos clientes.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -382,13 +403,13 @@ elif "Insumos" in menu:
         c_i2.write(f"🏷️ {ins['Categoria']}")
         c_i3.write(f"📦 {ins['Estoque (Unid.)']} unid.")
         c_i4.write(f"R$ {ins['Custo Unid. (R$)']:.2f}")
-        if c_i5.button("🗑️", key=f"del_ins_{idx_ins}"):
+        if c_i5.button("Remover", key=f"del_ins_{idx_ins}"):
             st.session_state.insumos.pop(idx_ins)
             st.rerun()
             
     st.markdown('</div>', unsafe_allow_html=True)
     
-    with st.expander("➕ Adicionar Novo Material / Insumo"):
+    with st.expander("Adicionar Novo Material / Insumo"):
         with st.form("form_insumo"):
             c_i1, c_i2 = st.columns(2)
             item_nome = c_i1.text_input("Nome do Material (Ex: Mosquetão Dourado)")
@@ -409,14 +430,14 @@ elif "Insumos" in menu:
 # TELA 4: CALCULADORA DE PREÇO & MARGEM
 # ------------------------------------------
 elif "Calculadora" in menu:
-    st.markdown("<h2>🧮 Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
+    st.markdown("<h2><i class='fa-solid fa-calculator icon-title'></i>Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Simule o preço de venda ideal considerando custos de fabricação e comissões.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
     col_calc1, col_calc2 = st.columns(2)
     
     with col_calc1:
-        st.markdown("<h4 style='color: #DB7F65;'>1. Custos da Peça</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #DB7F65;'><i class='fa-solid fa-cubes icon-sub'></i>1. Custos da Peça</h4>", unsafe_allow_html=True)
         qtd_beads = st.number_input("Quantidade aproximada de Beads", min_value=1, value=180)
         custo_bead_unitario = 0.015
         custo_beads_total = qtd_beads * custo_bead_unitario
@@ -432,7 +453,7 @@ elif "Calculadora" in menu:
         """, unsafe_allow_html=True)
         
     with col_calc2:
-        st.markdown("<h4 style='color: #DB7F65;'>2. Simulação Shopee</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #DB7F65;'><i class='fa-solid fa-store icon-sub'></i>2. Simulação Shopee</h4>", unsafe_allow_html=True)
         preco_venda_sim = st.number_input("Preço de Venda Desejado (R$)", min_value=0.0, value=20.00)
         
         taxa_shopee_pct = st.slider("Comissão Shopee (%)", min_value=0, max_value=30, value=20) / 100
@@ -453,14 +474,14 @@ elif "Calculadora" in menu:
 # TELA 5: IMPORTADOR SHOPEE
 # ------------------------------------------
 elif "Importar" in menu:
-    st.markdown("<h2>📊 Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
+    st.markdown("<h2><i class='fa-solid fa-file-csv icon-title'></i>Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Carregue a planilha de relatórios da Shopee para dar baixa automática no estoque.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card" style="text-align: center; padding: 40px;">', unsafe_allow_html=True)
-    st.markdown("<span style='font-size: 48px;'>📑</span>", unsafe_allow_html=True)
+    st.markdown("<i class='fa-solid fa-file-excel' style='font-size: 48px; color: #CF605B; margin-bottom: 12px;'></i>", unsafe_allow_html=True)
     st.markdown("<h4>Selecione o arquivo exportado da Shopee</h4>", unsafe_allow_html=True)
     
     file_shopee = st.file_uploader("", type=["csv", "xlsx"])
     if file_shopee is not None:
-        st.success("🎉 Arquivo recebido com sucesso! Processando pedidos...")
+        st.success("Arquivo recebido com sucesso! Processando pedidos...")
     st.markdown('</div>', unsafe_allow_html=True)
