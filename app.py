@@ -14,9 +14,13 @@ st.set_page_config(
 )
 
 # ==========================================
-# 2. DESIGN SYSTEM & CSS AVANÇADO (UX/UI)
+# 2. DESIGN SYSTEM, FONTS & FONTAWESOME (UX/UI)
 # ==========================================
 st.markdown("""
+    <!-- FONTAWESOME ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GOOGLE FONTS -->
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..800;1,300..800&family=Syne:wght@700;800&display=swap');
 
@@ -36,19 +40,52 @@ st.markdown("""
         letter-spacing: -0.5px;
     }
 
+    /* ESTILIZAÇÃO DO MENU LATERAL (SIDEBAR) */
     section[data-testid="stSidebar"] {
         background-color: #FFF5E8 !important;
         border-right: 2px solid #EAB890;
     }
 
-    section[data-testid="stSidebar"] .stRadio label {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 600;
-        color: #5C4B49 !important;
-        padding: 10px 14px;
-        border-radius: 10px;
+    /* TRANSFORMA O RADIO EM BOTÕES MODERNOS */
+    div[data-testid="stRadio"] > div {
+        gap: 10px;
     }
 
+    div[data-testid="stRadio"] label {
+        background-color: #FFFFFF !important;
+        border: 1.5px solid #EAB890 !important;
+        border-radius: 12px !important;
+        padding: 12px 16px !important;
+        width: 100% !important;
+        cursor: pointer;
+        transition: all 0.25s ease !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    div[data-testid="stRadio"] label:hover {
+        border-color: #CF605B !important;
+        background-color: #FFF5E8 !important;
+        transform: translateX(4px);
+    }
+
+    /* Oculta a bolinha padrão do Radio */
+    div[data-testid="stRadio"] label > div:first-child {
+        display: none !important;
+    }
+
+    /* Estilo do item Selecionado */
+    div[data-testid="stRadio"] label[data-checked="true"] {
+        background: linear-gradient(135deg, #CF605B 0%, #DB7F65 100%) !important;
+        border-color: #CF605B !important;
+        box-shadow: 0 4px 12px rgba(207, 96, 91, 0.3) !important;
+    }
+
+    div[data-testid="stRadio"] label[data-checked="true"] * {
+        color: #FFFFFF !important;
+        font-weight: 700 !important;
+    }
+
+    /* CARD DE PRODUTO INTEGRADO */
     .saya-card {
         background-color: #FFF5E8;
         border-radius: 20px;
@@ -61,9 +98,10 @@ st.markdown("""
     .product-card-container {
         background-color: #FFF5E8;
         border-radius: 18px;
-        padding: 16px;
+        padding: 18px;
         border: 2px solid #EAB890;
         box-shadow: 0px 4px 12px rgba(0,0,0,0.03);
+        margin-bottom: 10px;
     }
 
     .badge-tag {
@@ -143,7 +181,7 @@ with st.container():
         else:
             st.markdown("""
                 <div style="background-color: #FFF5E8; border: 2px solid #EAB890; border-radius: 18px; padding: 15px; text-align: center;">
-                    <span style="font-size: 32px;">✨</span>
+                    <i class="fa-solid fa-gem" style="font-size: 30px; color: #CF605B;"></i>
                     <div style="font-family: 'Syne', sans-serif; font-weight: 800; color: #CF605B; font-size: 14px; margin-top: 5px;">SAYA BEADS</div>
                 </div>
             """, unsafe_allow_html=True)
@@ -155,30 +193,36 @@ with st.container():
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. NAVEGAÇÃO LATERAL
+# 5. NAVEGAÇÃO LATERAL (COM ÍCONES VETORIAIS)
 # ==========================================
-st.sidebar.markdown("### 📍 Navegação")
-menu = st.sidebar.radio(
-    "", 
-    ["🖼️ Galeria de Produtos", "➕ Cadastrar Produto", "📦 Insumos Extras", "🧮 Calculadora & Ficha", "📊 Importar Shopee"]
-)
+st.sidebar.markdown("<h3 style='font-size: 18px; margin-bottom: 15px;'><i class='fa-solid fa-compass'></i> NAVEGAÇÃO</h3>", unsafe_allow_html=True)
+
+menu_options = [
+    '<i class="fa-solid fa-shapes"></i> &nbsp; Galeria de Produtos',
+    '<i class="fa-solid fa-circle-plus"></i> &nbsp; Cadastrar Produto',
+    '<i class="fa-solid fa-boxes-stacked"></i> &nbsp; Insumos Extras',
+    '<i class="fa-solid fa-calculator"></i> &nbsp; Calculadora & Ficha',
+    '<i class="fa-solid fa-file-csv"></i> &nbsp; Importar Shopee'
+]
+
+menu = st.sidebar.radio("", menu_options, label_visibility="collapsed")
 
 st.sidebar.markdown("<br><hr>", unsafe_allow_html=True)
-st.sidebar.markdown("<div style='text-align: center; color: #7A6664; font-size: 12px;'><b>Saya Beads</b> © 2025<br>Feito com amor & pixel art 🎨</div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div style='text-align: center; color: #7A6664; font-size: 12px;'><b>Saya Beads ERP</b><br>Pixel Art & Gestão 🎨</div>", unsafe_allow_html=True)
 
 # ------------------------------------------
-# TELA 1: GALERIA DE PRODUTOS (COM EDITAR E EXCLUIR)
+# TELA 1: GALERIA DE PRODUTOS
 # ------------------------------------------
-if menu == "🖼️ Galeria de Produtos":
-    st.markdown("<h2>🖼️ Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #5C4B49;'>Visão geral do seu estoque atual. Você pode editar ou excluir qualquer item.</p>", unsafe_allow_html=True)
+if "Galeria" in menu:
+    st.markdown("<h2><i class='fa-solid fa-shapes'></i> Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #5C4B49;'>Visão geral do seu estoque atual catalogado.</p>", unsafe_allow_html=True)
     
     if not st.session_state.produtos:
         st.markdown("""
             <div class="saya-card" style="text-align: center; padding: 40px;">
-                <span style="font-size: 48px;">📦</span>
-                <h3 style="margin-top: 10px;">Nenhum produto cadastrado ainda</h3>
-                <p style="color: #7A6664;">Vá no menu <b>'➕ Cadastrar Produto'</b> ao lado para adicionar a sua primeira arte!</p>
+                <i class="fa-solid fa-box-open" style="font-size: 48px; color: #DB7F65;"></i>
+                <h3 style="margin-top: 15px;">Nenhum produto cadastrado ainda</h3>
+                <p style="color: #7A6664;">Acesse <b>'Cadastrar Produto'</b> no menu lateral para adicinar suas peças!</p>
             </div>
         """, unsafe_allow_html=True)
     else:
@@ -191,38 +235,38 @@ if menu == "🖼️ Galeria de Produtos":
         cols = st.columns(3)
         for i, (real_idx, prod) in enumerate(prods_filtrados):
             with cols[i % 3]:
+                # CARD INTEGRADO: TAGS + TÍTULO + ESTOQUE & PREÇO TUDO NO BLOCO SUPERIOR
                 st.markdown(f"""
                 <div class="product-card-container">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <span class="badge-tag">{prod['tamanho']}</span>
                         <span class="badge-type">{prod['tipo']}</span>
                     </div>
-                    <h4 style="margin: 8px 0px; font-family: 'Syne', sans-serif; color: #CF605B;">{prod['nome']}</h4>
+                    <h4 style="margin: 8px 0px 12px 0px; font-family: 'Syne', sans-serif; color: #CF605B; font-size: 20px;">{prod['nome']}</h4>
+                    <div style="background-color: #FFFFFF; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #EAB890;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 13px; color: #7A6664;">Estoque:</span>
+                            <b style="color: #3E3232; font-size: 14px;">{prod['estoque']} unid.</b>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                            <span style="font-size: 13px; color: #7A6664;">Preço Shopee:</span>
+                            <b style="color: #CF605B; font-size: 16px;">R$ {prod['preco']:.2f}</b>
+                        </div>
+                    </div>
+                </div>
                 """, unsafe_allow_html=True)
                 
+                # EXIBIÇÃO DA FOTO LOGO ABAIXO DO BLOCO
                 if prod['foto'] is not None:
                     st.image(prod['foto'], use_container_width=True)
                 else:
                     st.markdown("""
-                        <div style="background-color: #E6DFD5; height: 160px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #7A6664; font-size: 13px;">
-                            📷 Sem foto cadastrada
+                        <div style="background-color: #FFF5E8; border: 1.5px solid #EAB890; height: 180px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #7A6664; font-size: 13px; margin-bottom: 10px;">
+                            <i class="fa-regular fa-image" style="font-size: 24px; margin-right: 8px;"></i> Sem foto
                         </div>
                     """, unsafe_allow_html=True)
                 
-                st.markdown(f"""
-                    <div style="margin-top: 12px; background-color: #FFFFFF; padding: 10px; border-radius: 12px; border: 1px solid #EAB890; margin-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="font-size: 12px; color: #7A6664;">Estoque:</span>
-                            <b style="color: #3E3232;">{prod['estoque']} unid.</b>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 4px;">
-                            <span style="font-size: 12px; color: #7A6664;">Preço Shopee:</span>
-                            <b style="color: #CF605B; font-size: 15px;">R$ {prod['preco']:.2f}</b>
-                        </div>
-                    </div>
-                """, unsafe_allow_html=True)
-                
-                # AÇÕES: EDITAR E EXCLUIR
+                # BOTÕES DE AÇÃO: EDITAR E EXCLUIR
                 c_act1, c_act2 = st.columns(2)
                 
                 with c_act1:
@@ -255,15 +299,14 @@ if menu == "🖼️ Galeria de Produtos":
                         st.session_state.produtos.pop(real_idx)
                         st.rerun()
 
-                st.markdown("</div>", unsafe_allow_html=True)
                 st.write("")
 
 # ------------------------------------------
 # TELA 2: CADASTRO DE PRODUTO
 # ------------------------------------------
-elif menu == "➕ Cadastrar Produto":
-    st.markdown("<h2>➕ Novo Cadastro de Produto</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #5C4B49;'>Preencha os detalhes abaixo para catalogar uma nova arte na Saya Beads.</p>", unsafe_allow_html=True)
+elif "Cadastrar" in menu:
+    st.markdown("<h2><i class='fa-solid fa-circle-plus'></i> Cadastrar Novo Produto</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #5C4B49;'>Adicione novos itens ao catálogo de artes da Saya Beads.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
     
@@ -295,7 +338,7 @@ elif menu == "➕ Cadastrar Produto":
             else:
                 st.markdown("""
                     <div style="border: 2px dashed #EAB890; border-radius: 14px; padding: 30px; text-align: center; background-color: #FFFFFF; color: #7A6664;">
-                        <span style="font-size: 32px;">📷</span><br>
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 32px; color: #DB7F65;"></i><br>
                         <span style="font-size: 13px;">Envie uma foto clara da sua arte pronta</span>
                     </div>
                 """, unsafe_allow_html=True)
@@ -322,10 +365,10 @@ elif menu == "➕ Cadastrar Produto":
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ------------------------------------------
-# TELA 3: INSUMOS EXTRAS (COM EXCLUIR)
+# TELA 3: INSUMOS EXTRAS
 # ------------------------------------------
-elif menu == "📦 Insumos Extras":
-    st.markdown("<h2>📦 Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
+elif "Insumos" in menu:
+    st.markdown("<h2><i class='fa-solid fa-boxes-stacked'></i> Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color: #5C4B49;'>Controle de ferragens, embalagens e mimos enviados aos clientes.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -362,9 +405,9 @@ elif menu == "📦 Insumos Extras":
 # ------------------------------------------
 # TELA 4: CALCULADORA DE PREÇO & MARGEM
 # ------------------------------------------
-elif menu == "🧮 Calculadora & Ficha":
-    st.markdown("<h2>🧮 Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #5C4B49;'>Simule o preço de venda ideal considerando custos de fabricação e comissões da plataforma.</p>", unsafe_allow_html=True)
+elif "Calculadora" in menu:
+    st.markdown("<h2><i class='fa-solid fa-calculator'></i> Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #5C4B49;'>Simule o preço de venda ideal considerando custos de fabricação e comissões.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
     col_calc1, col_calc2 = st.columns(2)
@@ -406,13 +449,13 @@ elif menu == "🧮 Calculadora & Ficha":
 # ------------------------------------------
 # TELA 5: IMPORTADOR SHOPEE
 # ------------------------------------------
-elif menu == "📊 Importar Shopee":
-    st.markdown("<h2>📊 Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #5C4B49;'>Carregue a planilha de relatórios da Shopee para dar baixa automática no seu estoque.</p>", unsafe_allow_html=True)
+elif "Importar" in menu:
+    st.markdown("<h2><i class='fa-solid fa-file-csv'></i> Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #5C4B49;'>Carregue a planilha de relatórios da Shopee para dar baixa automática no estoque.</p>", unsafe_allow_html=True)
     
     st.markdown('<div class="saya-card" style="text-align: center; padding: 40px;">', unsafe_allow_html=True)
-    st.markdown("<span style='font-size: 48px;'>📑</span>", unsafe_allow_html=True)
-    st.markdown("<h4>Selecione o arquivo exportado da Shopee</h4>", unsafe_allow_html=True)
+    st.markdown("<i class='fa-solid fa-file-excel' style='font-size: 48px; color: #DB7F65;'></i>", unsafe_allow_html=True)
+    st.markdown("<h4 style='margin-top: 15px;'>Selecione o arquivo exportado da Shopee</h4>", unsafe_allow_html=True)
     
     file_shopee = st.file_uploader("", type=["csv", "xlsx"])
     if file_shopee is not None:
