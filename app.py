@@ -8,12 +8,12 @@ import os
 # ==========================================
 st.set_page_config(
     page_title="Saya Beads ERP",
-    page_icon=":material/palette:",
+    page_icon="🎨",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Initialize navigation state
+# Estado global da navegação e dados
 if 'pagina_atual' not in st.session_state:
     st.session_state.pagina_atual = "Galeria de Produtos"
 
@@ -35,7 +35,6 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
-    /* TIPOGRAFIA GLOBAL MONTSERRAT */
     html, body, div, span, p, h1, h2, h3, h4, label, input, button {
         font-family: 'Montserrat', sans-serif !important;
     }
@@ -51,9 +50,7 @@ st.markdown("""
         border-right: none !important;
     }
 
-    /* ----------------------------------------------------
-       BOTÕES DO MENU LATERAL (SIMULAÇÃO DO DESIGN DO CLAUDE)
-    ---------------------------------------------------- */
+    /* BOTÕES DO MENU LATERAL (ESTILO CLAUDE) */
     section[data-testid="stSidebar"] .stButton > button {
         border-radius: 12px !important;
         padding: 12px 16px !important;
@@ -69,7 +66,7 @@ st.markdown("""
         transition: all 0.2s ease-in-out !important;
     }
 
-    /* ITEM NÃO SELECIONADO: FUNDO TRANSPARENTE E TEXTO BRANCO/CREME */
+    /* ITEM NÃO SELECIONADO: FUNDO TRANSPARENTE E TEXTO CLARO */
     section[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
         background-color: transparent !important;
         color: #FFF5E8 !important;
@@ -80,7 +77,7 @@ st.markdown("""
         color: #FFFFFF !important;
     }
 
-    /* ITEM SELECIONADO: CARD CREME COM TEXTO CORAL */
+    /* ITEM SELECIONADO: CARD CREME DESTACADO COM TEXTO CORAL */
     section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
         background-color: #FFF5E8 !important;
         color: #CF605B !important;
@@ -91,15 +88,6 @@ st.markdown("""
     section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
         background-color: #FFFFFF !important;
         color: #CF605B !important;
-    }
-
-    /* GARANTE COR DOS ÍCONES NOS BOTÕES */
-    section[data-testid="stSidebar"] .stButton > button[kind="primary"] * {
-        color: #CF605B !important;
-    }
-
-    section[data-testid="stSidebar"] .stButton > button[kind="secondary"] * {
-        color: #FFF5E8 !important;
     }
 
     /* CARDS DA TELA PRINCIPAL */
@@ -195,7 +183,7 @@ with st.container():
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ==========================================
-# 4. NAVEGAÇÃO LATERAL (SEM BOTÕES DE CHECKBOX)
+# 4. NAVEGAÇÃO LATERAL (SEM RADIO / SEM ERRO DE ÍCONE)
 # ==========================================
 st.sidebar.markdown("""
     <div style='font-size: 12px; font-weight: 800; letter-spacing: 1.2px; color: #FFF5E8; margin-bottom: 16px; opacity: 0.9;'>
@@ -204,11 +192,11 @@ st.sidebar.markdown("""
 """, unsafe_allow_html=True)
 
 menu_items = [
-    {"id": "Galeria de Produtos", "label": "Galeria de Produtos", "icon": ":material/grid_view:"},
-    {"id": "Cadastrar Produto", "label": "Cadastrar Produto", "icon": ":material/add_circle:"},
-    {"id": "Insumos Extras", "label": "Insumos Extras", "icon": ":material/inventory_2:"},
-    {"id": "Calculadora & Ficha", "label": "Calculadora & Ficha", "icon": ":material/calculate:"},
-    {"id": "Importar Shopee", "label": "Importar Shopee", "icon": ":material/cloud_upload:"},
+    {"id": "Galeria de Produtos", "label": "Galeria de Produtos", "icon": "🖼️"},
+    {"id": "Cadastrar Produto", "label": "Cadastrar Produto", "icon": "➕"},
+    {"id": "Insumos Extras", "label": "Insumos Extras", "icon": "📦"},
+    {"id": "Calculadora & Ficha", "label": "Calculadora & Ficha", "icon": "🧮"},
+    {"id": "Importar Shopee", "label": "Importar Shopee", "icon": "☁️"},
 ]
 
 for item in menu_items:
@@ -240,7 +228,7 @@ menu = st.session_state.pagina_atual
 # TELA 1: GALERIA DE PRODUTOS
 # ------------------------------------------
 if menu == "Galeria de Produtos":
-    st.markdown("## :material/grid_view: Galeria de Produtos Prontos")
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>🖼️ Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
     st.markdown("Visão geral do seu estoque atual catalogado.")
     
     if not st.session_state.produtos:
@@ -326,7 +314,7 @@ if menu == "Galeria de Produtos":
 # TELA 2: CADASTRO DE PRODUTO
 # ------------------------------------------
 elif menu == "Cadastrar Produto":
-    st.markdown("## :material/add_circle: Cadastrar Novo Produto")
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>➕ Cadastrar Novo Produto</h2>", unsafe_allow_html=True)
     st.markdown("Adicione novos itens ao catálogo de artes da Saya Beads.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -388,7 +376,7 @@ elif menu == "Cadastrar Produto":
 # TELA 3: INSUMOS EXTRAS
 # ------------------------------------------
 elif menu == "Insumos Extras":
-    st.markdown("## :material/inventory_2: Estoque de Insumos Extras")
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>📦 Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
     st.markdown("Controle de ferragens, embalagens e mimos enviados aos clientes.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -409,7 +397,7 @@ elif menu == "Insumos Extras":
 # TELA 4: CALCULADORA
 # ------------------------------------------
 elif menu == "Calculadora & Ficha":
-    st.markdown("## :material/calculate: Calculadora de Preço & Lucro Shopee")
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>🧮 Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
     st.markdown("Simule o preço de venda ideal considerando custos de fabricação e comissões.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -451,7 +439,7 @@ elif menu == "Calculadora & Ficha":
 # TELA 5: IMPORTADOR
 # ------------------------------------------
 elif menu == "Importar Shopee":
-    st.markdown("## :material/cloud_upload: Importação de Vendas Shopee")
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>☁️ Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
     st.markdown("Carregue a planilha de relatórios da Shopee para dar baixa automática no estoque.")
     
     st.markdown('<div class="saya-card" style="text-align: center; padding: 40px;">', unsafe_allow_html=True)
