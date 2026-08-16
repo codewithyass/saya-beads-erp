@@ -28,19 +28,26 @@ if 'insumos' not in st.session_state:
     ]
 
 # ==========================================
-# 2. DESIGN SYSTEM & ESTILIZAÇÃO (ESTILO CLAUDE)
+# 2. DESIGN SYSTEM & ESTILIZAÇÃO (CORRIGIDO)
 # ==========================================
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
-    html, body, div, span, p, h1, h2, h3, h4, label, input, button {
+    /* FONTE MONTSERRAT NOS ELEMENTOS DE TEXTO */
+    html, body, p, h1, h2, h3, h4, label, input {
         font-family: 'Montserrat', sans-serif !important;
     }
 
     .stApp {
         background-color: #E6DFD5;
         color: #3E3232;
+    }
+
+    /* CORREÇÃO DO VAZAMENTO DE TEXTO: RESTAURA FONTE DE ÍCONES NATIVOS DO STREAMLIT */
+    [data-testid="stSidebarCollapseButton"] *,
+    [data-testid="stHeader"] * {
+        font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', sans-serif !important;
     }
 
     /* BARRA LATERAL CORAL */
@@ -55,6 +62,7 @@ st.markdown("""
         padding: 14px 18px !important;
         font-size: 15px !important;
         font-weight: 600 !important;
+        font-family: 'Montserrat', sans-serif !important;
         text-align: left !important;
         justify-content: flex-start !important;
         border: none !important;
@@ -134,6 +142,7 @@ st.markdown("""
         border: 1.5px solid #EAB890 !important;
         background-color: #FFFFFF !important;
         color: #3E3232 !important;
+        font-family: 'Montserrat', sans-serif !important;
     }
 
     /* BOTÃO PRINCIPAL DE FORMULÁRIO */
@@ -144,6 +153,7 @@ st.markdown("""
         border-radius: 14px !important;
         border: none !important;
         font-weight: 700 !important;
+        font-family: 'Montserrat', sans-serif !important;
         width: 100%;
     }
 
