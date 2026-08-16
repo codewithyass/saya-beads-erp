@@ -8,12 +8,11 @@ import os
 # ==========================================
 st.set_page_config(
     page_title="Saya Beads ERP",
-    page_icon="🎨",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Estado global da navegação e dados
+# Estado global do aplicativo
 if 'pagina_atual' not in st.session_state:
     st.session_state.pagina_atual = "Galeria de Produtos"
 
@@ -53,7 +52,7 @@ st.markdown("""
     /* BOTÕES DO MENU LATERAL (ESTILO CLAUDE) */
     section[data-testid="stSidebar"] .stButton > button {
         border-radius: 12px !important;
-        padding: 12px 16px !important;
+        padding: 14px 18px !important;
         font-size: 15px !important;
         font-weight: 600 !important;
         text-align: left !important;
@@ -66,7 +65,7 @@ st.markdown("""
         transition: all 0.2s ease-in-out !important;
     }
 
-    /* ITEM NÃO SELECIONADO: FUNDO TRANSPARENTE E TEXTO CLARO */
+    /* ITEM NÃO SELECIONADO: LIMPO, TRANSPARENTE E TEXTO CREME */
     section[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
         background-color: transparent !important;
         color: #FFF5E8 !important;
@@ -77,7 +76,7 @@ st.markdown("""
         color: #FFFFFF !important;
     }
 
-    /* ITEM SELECIONADO: CARD CREME DESTACADO COM TEXTO CORAL */
+    /* ITEM SELECIONADO: CAIXA CREME COM TEXTO CORAL */
     section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
         background-color: #FFF5E8 !important;
         color: #CF605B !important;
@@ -183,7 +182,7 @@ with st.container():
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ==========================================
-# 4. NAVEGAÇÃO LATERAL (SEM RADIO / SEM ERRO DE ÍCONE)
+# 4. NAVEGAÇÃO LATERAL (LIMPA & TEXTO PURO)
 # ==========================================
 st.sidebar.markdown("""
     <div style='font-size: 12px; font-weight: 800; letter-spacing: 1.2px; color: #FFF5E8; margin-bottom: 16px; opacity: 0.9;'>
@@ -192,11 +191,11 @@ st.sidebar.markdown("""
 """, unsafe_allow_html=True)
 
 menu_items = [
-    {"id": "Galeria de Produtos", "label": "Galeria de Produtos", "icon": "🖼️"},
-    {"id": "Cadastrar Produto", "label": "Cadastrar Produto", "icon": "➕"},
-    {"id": "Insumos Extras", "label": "Insumos Extras", "icon": "📦"},
-    {"id": "Calculadora & Ficha", "label": "Calculadora & Ficha", "icon": "🧮"},
-    {"id": "Importar Shopee", "label": "Importar Shopee", "icon": "☁️"},
+    {"id": "Galeria de Produtos", "label": "Galeria de Produtos"},
+    {"id": "Cadastrar Produto", "label": "Cadastrar Produto"},
+    {"id": "Insumos Extras", "label": "Insumos Extras"},
+    {"id": "Calculadora & Ficha", "label": "Calculadora & Ficha"},
+    {"id": "Importar Shopee", "label": "Importar Shopee"},
 ]
 
 for item in menu_items:
@@ -204,7 +203,7 @@ for item in menu_items:
     btn_type = "primary" if is_selected else "secondary"
     
     if st.sidebar.button(
-        f"{item['icon']}  {item['label']}", 
+        item['label'], 
         key=f"nav_{item['id']}", 
         type=btn_type, 
         use_container_width=True
@@ -228,7 +227,7 @@ menu = st.session_state.pagina_atual
 # TELA 1: GALERIA DE PRODUTOS
 # ------------------------------------------
 if menu == "Galeria de Produtos":
-    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>🖼️ Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800; margin-top: 0;'>Galeria de Produtos Prontos</h2>", unsafe_allow_html=True)
     st.markdown("Visão geral do seu estoque atual catalogado.")
     
     if not st.session_state.produtos:
@@ -314,7 +313,7 @@ if menu == "Galeria de Produtos":
 # TELA 2: CADASTRO DE PRODUTO
 # ------------------------------------------
 elif menu == "Cadastrar Produto":
-    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>➕ Cadastrar Novo Produto</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800; margin-top: 0;'>Cadastrar Novo Produto</h2>", unsafe_allow_html=True)
     st.markdown("Adicione novos itens ao catálogo de artes da Saya Beads.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -376,7 +375,7 @@ elif menu == "Cadastrar Produto":
 # TELA 3: INSUMOS EXTRAS
 # ------------------------------------------
 elif menu == "Insumos Extras":
-    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>📦 Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800; margin-top: 0;'>Estoque de Insumos Extras</h2>", unsafe_allow_html=True)
     st.markdown("Controle de ferragens, embalagens e mimos enviados aos clientes.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -397,7 +396,7 @@ elif menu == "Insumos Extras":
 # TELA 4: CALCULADORA
 # ------------------------------------------
 elif menu == "Calculadora & Ficha":
-    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>🧮 Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800; margin-top: 0;'>Calculadora de Preço & Lucro Shopee</h2>", unsafe_allow_html=True)
     st.markdown("Simule o preço de venda ideal considerando custos de fabricação e comissões.")
     
     st.markdown('<div class="saya-card">', unsafe_allow_html=True)
@@ -439,7 +438,7 @@ elif menu == "Calculadora & Ficha":
 # TELA 5: IMPORTADOR
 # ------------------------------------------
 elif menu == "Importar Shopee":
-    st.markdown("<h2 style='color: #CF605B; font-weight: 800;'>☁️ Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #CF605B; font-weight: 800; margin-top: 0;'>Importação de Vendas Shopee</h2>", unsafe_allow_html=True)
     st.markdown("Carregue a planilha de relatórios da Shopee para dar baixa automática no estoque.")
     
     st.markdown('<div class="saya-card" style="text-align: center; padding: 40px;">', unsafe_allow_html=True)
